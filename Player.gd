@@ -29,16 +29,16 @@ func get_input():
 	if left:
 		velocity.x -= walk_speed*run_multiplier
 
-	if Input.is_action_just_pressed("move_left"):
-		$PlayerAnimation.set_flip_h(true)
-		$Gun.position.x = -initialPos.x
-		$Gun.transform *= Transform2D.FLIP_Y
-		
-		
-	elif Input.is_action_just_pressed("move_right"):
-		$PlayerAnimation.set_flip_h(false)
-		$Gun.position.x = initialPos.x
-		$Gun.transform = initialTf
+#	if Input.is_action_just_pressed("move_left"):
+#		$PlayerAnimation.set_flip_h(true)
+#		$Gun.position.x = -initialPos.x
+#		$Gun.transform *= Transform2D.FLIP_Y
+#
+#
+#	elif Input.is_action_just_pressed("move_right"):
+#		$PlayerAnimation.set_flip_h(false)
+#		$Gun.position.x = initialPos.x
+#		$Gun.transform = initialTf
 
 func _physics_process(delta):
 	get_input()
@@ -48,14 +48,26 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity, Vector2(0, -1))
 	
 func _process(delta):
+	# Gun pointing
 	var	rotation = get_global_mouse_position().angle_to_point(position)
-	if $PlayerAnimation.flip_h:
-		if rotation > 0:
-			rotation = clamp(rotation, PI/2, PI)
-		else:
-			rotation = clamp(rotation, -PI, -PI/2)
+	
+	if (rotation > -PI/2 and rotation < PI/2):
+		$PlayerAnimation.set_flip_h(false)
+		$Gun.position.x = initialPos.x
+		$Gun.transform = initialTf
 	else:
-		rotation = clamp(rotation, -PI/2, PI/2)
-	print(rotation)
+		$PlayerAnimation.set_flip_h(true)
+		$Gun.transform = initialTf
+		$Gun.position.x = -initialPos.x
+		$Gun.transform *= Transform2D.FLIP_Y
+#		if rotation > 0:
+#			rotation = clamp(rotation, PI/2, PI)
+#		else:
+#			rotation = clamp(rotation, -PI, -PI/2)
+#	else:
+#		rotation = clamp(rotation, -PI/2, PI/2)
+#	print(rotation)
 	$Gun.rotation = rotation
 
+	# Animation
+#	if velocity.x
