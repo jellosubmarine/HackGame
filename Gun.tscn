@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Gun.gd" type="Script" id=1]
+[ext_resource path="res://art/pistol.png" type="Texture" id=2]
+
+[sub_resource type="CircleShape2D" id=19]
+radius = 6.08276
+
+[node name="Gun" type="Area2D"]
+position = Vector2( 7, 4 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.354167, 0.354167 )
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 0, 1 )
+shape = SubResource( 19 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Bulletpoint" type="Node2D" parent="."]
+visible = false
+position = Vector2( 6, -1 )
+__meta__ = {
+"_edit_lock_": true
+}

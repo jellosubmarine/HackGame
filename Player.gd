@@ -29,17 +29,6 @@ func get_input():
 	if left:
 		velocity.x -= walk_speed*run_multiplier
 
-#	if Input.is_action_just_pressed("move_left"):
-#		$PlayerAnimation.set_flip_h(true)
-#		$Gun.position.x = -initialPos.x
-#		$Gun.transform *= Transform2D.FLIP_Y
-#
-#
-#	elif Input.is_action_just_pressed("move_right"):
-#		$PlayerAnimation.set_flip_h(false)
-#		$Gun.position.x = initialPos.x
-#		$Gun.transform = initialTf
-
 func _physics_process(delta):
 	get_input()
 	velocity.y += GRAVITY * delta
@@ -60,14 +49,23 @@ func _process(delta):
 		$Gun.transform = initialTf
 		$Gun.position.x = -initialPos.x
 		$Gun.transform *= Transform2D.FLIP_Y
-#		if rotation > 0:
-#			rotation = clamp(rotation, PI/2, PI)
-#		else:
-#			rotation = clamp(rotation, -PI, -PI/2)
-#	else:
-#		rotation = clamp(rotation, -PI/2, PI/2)
-#	print(rotation)
+
 	$Gun.rotation = rotation
 
 	# Animation
-#	if velocity.x
+	if abs(velocity.x) > 0 and velocity.y == 0:
+		$PlayerAnimation.play("walk")
+	elif velocity.x == 0 and velocity.y == 0:
+		$PlayerAnimation.play("walk")
+		$PlayerAnimation.frame = 0
+		$PlayerAnimation.stop()
+	if velocity.y < 0:
+		$PlayerAnimation.play("jump")
+		$PlayerAnimation.frame = 2
+		$PlayerAnimation.stop()
+	if velocity.y > 0:
+		$PlayerAnimation.play("jump")
+		$PlayerAnimation.frame = 3
+		$PlayerAnimation.stop()
+	
+	
